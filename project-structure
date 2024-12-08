@@ -1,0 +1,8 @@
+gesture-volume-control/
+├── index.html
+├── styles.css
+├── js/
+│   ├── app.js
+│   ├── gestureDetector.js
+│   └── volumeController.js
+└── README.md 
