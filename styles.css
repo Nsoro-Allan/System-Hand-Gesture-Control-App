@@ -13,8 +13,4 @@ body {
 #output {
     transform: scaleX(-1);
     pointer-events: none;
-}
-
-.dark {
-    color-scheme: dark;
 } 
