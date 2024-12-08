@@ -64,27 +64,23 @@ class GestureDetector {
         const fingerTips = landmarks.slice(8, 21, 4); // Get finger tips positions
         const fingerBases = landmarks.slice(5, 18, 4); // Get finger base positions
         
-        // Calculate average height of finger tips relative to palm
-        const avgHeight = fingerTips.reduce((sum, tip) => sum + (palmBase[1] - tip[1]), 0) / fingerTips.length;
-        
-        // Check for straight hand gesture (finger tips far from palm)
-        const isStraightHand = fingerTips.every((tip, i) => {
+        // Count extended fingers
+        const extendedFingers = fingerTips.reduce((count, tip, i) => {
             const base = fingerBases[i];
             const distance = Math.sqrt(
                 Math.pow(tip[0] - base[0], 2) + 
                 Math.pow(tip[1] - base[1], 2)
             );
-            return distance > 60; // Threshold for considering fingers straight
-        });
+            return count + (distance > 60 ? 1 : 0); // Threshold for considering finger extended
+        }, 0);
         
-        if (isStraightHand) {
-            return 'MUTE';
-        }
-        
-        if (avgHeight > 30) {
+        // Interpret gestures based on number of extended fingers
+        if (extendedFingers === 2) {
             return 'VOLUME_UP';
-        } else if (avgHeight < -30) {
+        } else if (extendedFingers === 3) {
             return 'VOLUME_DOWN';
+        } else if (extendedFingers === 4) {
+            return 'MUTE';
         }
         
         return null;

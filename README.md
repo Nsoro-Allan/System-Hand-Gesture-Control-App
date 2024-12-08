@@ -14,9 +14,9 @@ A web-based application that allows you to control your system's volume using ha
 
 ## Gestures
 
-- Raise hand up: Increase volume by 10%
-- Lower hand: Decrease volume by 10%
-- Straight hand (palm facing camera): Toggle mute/unmute
+- Show 2 fingers: Increase volume by 10%
+- Show 3 fingers: Decrease volume by 10%
+- Show 4 fingers: Toggle mute/unmute
 
 ## Setup
 
@@ -65,9 +65,9 @@ This application uses:
 
 ## Gesture Detection Details
 
-- Volume Up: Detected when hand is raised above shoulder level
-- Volume Down: Detected when hand is lowered below shoulder level
-- Mute/Unmute: Detected when all fingers are extended (straight hand)
+- Volume Up: Detected when exactly 2 fingers are extended
+- Volume Down: Detected when exactly 3 fingers are extended
+- Mute/Unmute: Detected when exactly 4 fingers are extended
 
 ## Troubleshooting
 
