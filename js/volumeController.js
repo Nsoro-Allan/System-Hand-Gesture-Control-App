@@ -5,6 +5,8 @@ class VolumeController {
         this.currentVolume = 1.0;
         this.isMuted = false;
         this.systemVolume = new SystemVolumeController();
+        this.lastGesture = null;
+        this.lastGestureTime = 0;
     }
 
     async initialize() {
@@ -25,16 +27,25 @@ class VolumeController {
     }
 
     adjustVolume(gesture) {
-        const VOLUME_STEP = 0.1;
+        // Prevent rapid repeated gestures by requiring a small delay
+        const now = Date.now();
+        if (gesture === this.lastGesture && now - this.lastGestureTime < 1000) {
+            return; // Ignore repeated gestures within 1 second
+        }
+        
+        this.lastGesture = gesture;
+        this.lastGestureTime = now;
         
         switch (gesture) {
             case 'VOLUME_UP':
-                this.currentVolume = Math.min(this.currentVolume + VOLUME_STEP, 1.0);
+                // Increase volume by 10%
+                this.currentVolume = Math.min(this.currentVolume + 0.1, 1.0);
                 this.isMuted = false;
                 this.systemVolume.setVolume(this.currentVolume);
                 break;
             case 'VOLUME_DOWN':
-                this.currentVolume = Math.max(this.currentVolume - VOLUME_STEP, 0.0);
+                // Decrease volume by 10%
+                this.currentVolume = Math.max(this.currentVolume - 0.1, 0.0);
                 this.isMuted = false;
                 this.systemVolume.setVolume(this.currentVolume);
                 break;

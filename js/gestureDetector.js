@@ -67,17 +67,17 @@ class GestureDetector {
         // Calculate average height of finger tips relative to palm
         const avgHeight = fingerTips.reduce((sum, tip) => sum + (palmBase[1] - tip[1]), 0) / fingerTips.length;
         
-        // Check for fist gesture (finger tips close to palm)
-        const isFist = fingerTips.every((tip, i) => {
+        // Check for straight hand gesture (finger tips far from palm)
+        const isStraightHand = fingerTips.every((tip, i) => {
             const base = fingerBases[i];
             const distance = Math.sqrt(
                 Math.pow(tip[0] - base[0], 2) + 
                 Math.pow(tip[1] - base[1], 2)
             );
-            return distance < 40; // Threshold for considering fingers curled
+            return distance > 60; // Threshold for considering fingers straight
         });
         
-        if (isFist) {
+        if (isStraightHand) {
             return 'MUTE';
         }
         
